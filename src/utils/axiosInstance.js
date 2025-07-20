@@ -5,7 +5,7 @@ const backendURL = import.meta.env.VITE_API_URL;
 
 const axiosInstance = axios.create({
   baseURL: backendURL,
-  withCredentials: true, // needed if you're using cookies
+  withCredentials: true, // needed if we are using cookies
 });
 
 // Add a request interceptor to include the token in headers

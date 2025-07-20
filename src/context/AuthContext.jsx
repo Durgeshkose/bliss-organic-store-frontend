@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import axios from "../utils/axiosInstance"; // ✅ Correct baseURL
+import axios from "../utils/axiosInstance"; 
 
 const AuthContext = createContext();
 
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password, role = "user") => {
     try {
       //  Use dynamic endpoint
-      const endpoint = role === "admin" ? "/api/admin/login" : "/api/users/login";    //  
+      const endpoint = role === "admin" ? "/admin/login" : "/users/login";    //  
       const response = await axios.post(endpoint, { email, password });
 
       //  Extract correct user object
