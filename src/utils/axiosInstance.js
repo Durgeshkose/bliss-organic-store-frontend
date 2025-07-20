@@ -4,7 +4,7 @@ import axios from 'axios';
 const backendURL = import.meta.env.VITE_API_URL;
 
 const axiosInstance = axios.create({
-  baseURL: backendURL,
+  baseURL: "https://bliss-organic-store-backend-1.onrender.com/api",
   withCredentials: true, // needed if we are using cookies
 });
 

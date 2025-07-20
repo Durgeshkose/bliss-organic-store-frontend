@@ -24,25 +24,33 @@ const Shop = () => {
   // Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/products");
-        const data = await response.json();
-        // Normalize the data structure
-        const normalizedProducts = data.map(product => ({
-          ...product,
-          id: product._id,
-          image: product.imageURL || product.image,
-          originalPrice: product.price + 20,
-          discount: product.discount || 10,
-          rating: product.rating || 4.5,
-          reviews: product.reviews || 25,
-          unit: product.unit || "unit",
-        }));
-        setProducts(normalizedProducts);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
+  try {
+    const response = await axios.get("/products"); // ✅ relative path use karo
+    const data = response.data;
+
+    if (!Array.isArray(data)) {
+      console.error("Data format unexpected:", data);
+      setProducts([]);
+      return;
+    }
+
+    const normalizedProducts = data.map((product) => ({
+      ...product,
+      id: product._id,
+      image: product.imageURL || product.image,
+      originalPrice: product.price + 20,
+      discount: product.discount || 10,
+      rating: product.rating || 4.5,
+      reviews: product.reviews || 25,
+      unit: product.unit || "unit",
+    }));
+
+    setProducts(normalizedProducts);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+};
+
 
     fetchProducts();
   }, []);
