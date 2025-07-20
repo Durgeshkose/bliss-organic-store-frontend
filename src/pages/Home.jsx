@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import ProductCard from "../components/ProductCard";
 import { useAuth } from "../context/AuthContext";
-import Footer from "../components/Footer"; // Adjust the path according to your folder structure
+import Footer from "../components/Footer"; 
 
 const Home = () => {
   const { user } = useAuth();
@@ -20,25 +20,25 @@ const Home = () => {
   const categories = [
     {
       name: "Personal Care",
-      image: "../public/HomePageImages/Personal Care.jpg",
+      image: "/HomePageImages/Personal-Care.jpg",
       link: "/shop?category=personal-care",
       count: "50+ varieties",
     },
     {
       name: "Herbal Supplements",
-      image: "../public/HomePageImages/Herbal Supplement.jpg",
+      image: "/HomePageImages/Herbal-Supplement.jpg",
       link: "/shop?category=herbal-supplements",
       count: "80+ varieties",
     },
     {
       name: "Teas & Infusions",
-      image: "../public/HomePageImages/tea.jpg",
+      image: "/HomePageImages/tea.jpg",
       link: "/shop?category=teas-infusions",
       count: "25+ varieties",
     },
     {
       name: "Packaged Foods",
-      image: "../public/HomePageImages/Packaged Foods.jpg",
+      image: "/HomePageImages/Packaged-Foods.jpg",
       link: "/shop?category=packaged-foods",
       count: "15+ varieties",
     },
@@ -51,9 +51,8 @@ const Home = () => {
   useEffect(() => {
     const fetchBackendProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/products"); // Change URL if needed
+        const res = await fetch("https://bliss-organic-store-backend-1.onrender.com/api/products"); // Change URL if needed
         const data = await res.json();
-        
         // Sort by creation date (newest first) and take only the latest 7 products for carousel
         const sortedData = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         const latestProducts = sortedData.slice(0, 7);
@@ -166,7 +165,7 @@ const Home = () => {
 
             <div className="relative mt-8 lg:mt-0">
               <img
-                src="../public/HomePageImages/Front.png"
+                src="/HomePageImages/Front.png"
                 alt="Fresh organic produce"
                 className="rounded-2xl shadow-2xl w-full max-w-md mx-auto"
               />
