@@ -1,12 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from '../utils/axiosInstance'; // ✅ Correct baseURL
+import React, { createContext, useContext, useState, useEffect } from "react";
+import axios from "../utils/axiosInstance"; // ✅ Correct baseURL
 
 const AuthContext = createContext();
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
@@ -16,69 +16,73 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const userData = localStorage.getItem('user');
+    const token = localStorage.getItem("token");
+    const userData = localStorage.getItem("user");
 
     if (token && userData) {
       try {
         const parsedUser = JSON.parse(userData);
         setUser(parsedUser);
       } catch (error) {
-        console.error('Error parsing user data:', error);
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        console.error("Error parsing user data:", error);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
       }
     }
     setLoading(false);
   }, []);
 
-  const login = async (email, password, role = 'user') => {
+  const login = async (email, password, role = "user") => {
     try {
-      // 🔁 Use dynamic endpoint
-      const endpoint = role === 'admin' ? '/admin/login' : '/users/login';
+      //  Use dynamic endpoint
+      const endpoint = role === "admin" ? "/api/admin/login" : "/api/users/login";    //  
       const response = await axios.post(endpoint, { email, password });
 
-      // 🔐 Extract correct user object
+      //  Extract correct user object
       const userData = response.data.user || response.data.admin;
       const token = response.data.token;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
 
       return { success: true, user: userData };
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       return {
         success: false,
-        error: error.response?.data?.message || 'Login failed',
+        error: error.response?.data?.message || "Login failed",
       };
     }
   };
 
   const register = async (name, email, password) => {
     try {
-      const response = await axios.post('/users/register', { name, email, password });
+      const response = await axios.post("/users/register", {
+        name,
+        email,
+        password,
+      });
 
       const { token, user: userData } = response.data;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
 
       return { success: true, user: userData };
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error("Registration error:", error);
       return {
         success: false,
-        error: error.response?.data?.message || 'Registration failed',
+        error: error.response?.data?.message || "Registration failed",
       };
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUser(null);
   };
 
@@ -89,7 +93,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     loading,
     isAuthenticated: !!user,
-    isAdmin: user?.role === 'admin',
+    isAdmin: user?.role === "admin",
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

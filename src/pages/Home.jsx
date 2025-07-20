@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import ProductCard from "../components/ProductCard";
 import { useAuth } from "../context/AuthContext";
-import Footer from "../components/Footer"; 
+import Footer from "../components/Footer";
 
 const Home = () => {
   const { user } = useAuth();
@@ -51,20 +51,25 @@ const Home = () => {
   useEffect(() => {
     const fetchBackendProducts = async () => {
       try {
-        const res = await fetch("https://bliss-organic-store-backend-1.onrender.com/api/products"); // Change URL if needed
+        const res = await fetch(
+          "https://bliss-organic-store-backend-1.onrender.com/api/products"
+        ); // Change URL if needed
         const data = await res.json();
         // Sort by creation date (newest first) and take only the latest 7 products for carousel
-        const sortedData = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        const sortedData = data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
         const latestProducts = sortedData.slice(0, 7);
         setBackendProducts(latestProducts);
 
         // Filter products by category for Personal Care (latest 4)
         const personalCare = data
-          .filter(product => 
-            product.category?.toLowerCase().includes('personal care') || 
-            product.category?.toLowerCase().includes('personal-care') ||
-            product.name?.toLowerCase().includes('personal') ||
-            product.name?.toLowerCase().includes('care')
+          .filter(
+            (product) =>
+              product.category?.toLowerCase().includes("personal care") ||
+              product.category?.toLowerCase().includes("personal-care") ||
+              product.name?.toLowerCase().includes("personal") ||
+              product.name?.toLowerCase().includes("care")
           )
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .slice(0, 4);
@@ -72,16 +77,16 @@ const Home = () => {
 
         // Filter products by category for Gifting & Hampers (latest 4)
         const gifting = data
-          .filter(product => 
-            product.category?.toLowerCase().includes('gift') || 
-            product.category?.toLowerCase().includes('hamper') ||
-            product.name?.toLowerCase().includes('gift') ||
-            product.name?.toLowerCase().includes('hamper')
+          .filter(
+            (product) =>
+              product.category?.toLowerCase().includes("gift") ||
+              product.category?.toLowerCase().includes("hamper") ||
+              product.name?.toLowerCase().includes("gift") ||
+              product.name?.toLowerCase().includes("hamper")
           )
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .slice(0, 4);
         setGiftingProducts(gifting);
-
       } catch (err) {
         console.error("Error fetching backend products:", err);
       }
@@ -260,17 +265,24 @@ const Home = () => {
 
             {/* Carousel Container */}
             <div className="overflow-hidden relative bg-gray-50 rounded-lg">
-              <div 
+              <div
                 className="flex space-x-6 py-4"
                 style={{
-                  animation: 'scroll-infinite 30s linear infinite',
-                  width: `${duplicatedProducts.length * 288}px` // 288px = 18rem (w-72) + 1.5rem (gap)
+                  animation: "scroll-infinite 30s linear infinite",
+                  width: `${duplicatedProducts.length * 288}px`, // 288px = 18rem (w-72) + 1.5rem (gap)
                 }}
-                onMouseEnter={(e) => e.target.style.animationPlayState = 'paused'}
-                onMouseLeave={(e) => e.target.style.animationPlayState = 'running'}
+                onMouseEnter={(e) =>
+                  (e.target.style.animationPlayState = "paused")
+                }
+                onMouseLeave={(e) =>
+                  (e.target.style.animationPlayState = "running")
+                }
               >
                 {duplicatedProducts.map((product, index) => (
-                  <div key={`${product._id}-${index}`} className="flex-shrink-0 w-72">
+                  <div
+                    key={`${product._id}-${index}`}
+                    className="flex-shrink-0 w-72"
+                  >
                     <ProductCard
                       product={{
                         ...product,
@@ -301,7 +313,8 @@ const Home = () => {
                   Personal Care Products
                 </h2>
                 <p className="text-gray-600 text-sm sm:text-base">
-                  Natural and organic personal care essentials for your daily routine.
+                  Natural and organic personal care essentials for your daily
+                  routine.
                 </p>
               </div>
               <Link

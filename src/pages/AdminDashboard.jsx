@@ -162,10 +162,11 @@ const AdminDashboard = () => {
                   <option value="Packaged Foods">Packaged Foods</option>
                   <option value="Personal Care">Personal Care</option>
                   <option value="Gifting & Hampers">Gifting & Hampers</option>
-                  <option value="Skincare & Wellness">Skincare & Wellness</option>
+                  <option value="Skincare & Wellness">
+                    Skincare & Wellness
+                  </option>
                   <option value="Seeds & Herbs">Seeds & Herbs</option>
                   <option value="Ready To Cook">Ready To Cook</option>
-                  
                 </select>
               </div>
             </div>
@@ -248,7 +249,7 @@ const AdminDashboard = () => {
   // Function to handle product deletion
 
   const handleDeleteProduct = async (productId) => {
-      console.log("Trying to delete product with ID:", productId); // 👈 Add this
+    console.log("Trying to delete product with ID:", productId); // 👈 Add this
 
     if (!window.confirm("Are you sure you want to delete this product?"))
       return;
@@ -392,7 +393,10 @@ const AdminDashboard = () => {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {products.map((product) => (
-                <tr key={product._id || product.id} className="hover:bg-gray-50">
+                <tr
+                  key={product._id || product.id}
+                  className="hover:bg-gray-50"
+                >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-3">
                       {/* Product Image */}
@@ -430,13 +434,17 @@ const AdminDashboard = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
                       <button
-                        onClick={() => setEditingProduct(product || product._id)}
+                        onClick={() =>
+                          setEditingProduct(product || product._id)
+                        }
                         className="p-1 text-blue-600 hover:text-blue-800"
                       >
                         <Edit className="h-4 w-4" />
                       </button>
                       <button
-                        onClick={() => handleDeleteProduct(product.id || product._id)}
+                        onClick={() =>
+                          handleDeleteProduct(product.id || product._id)
+                        }
                         className="p-1 text-red-600 hover:text-red-800"
                       >
                         <Trash2 className="h-4 w-4" />
